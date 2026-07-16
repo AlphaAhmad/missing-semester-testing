@@ -1,0 +1,40 @@
+name: Code Quality and Testing CI
+
+on: # run on every push and pull request
+  push:
+    branches:[main, master] # when it is being directed to main or master
+  pull_requests:
+    branches:[main, master]
+
+jobs:
+  run-checks:
+    runs-on: ubuntu-latest
+
+  steps:
+    # 1. Check out the project code from GitHub
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    # 2. Set up Python in the virtual environment
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.14'
+
+    # 3. Install our dependencies, ruff, and testing framework
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install ruff pytest pytest-cov
+
+    # 4. Run Ruff Formatter check (will fail if code isn't formatted properly)
+    - name: Run Ruff Formatter Check
+      run: ruff format --check .
+
+    # 5. Run Ruff Linter check (will fail if there are unresolved lint issues)
+    - name: Run Ruff Linter Check
+      run: ruff check .
+
+    # 6. Run our unit tests with coverage
+    - name: Run Unit Tests
+      run: pytest --cov=. --cov-report=term-missing  
