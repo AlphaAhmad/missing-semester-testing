@@ -2,9 +2,12 @@ name: Code Quality and Testing CI
 
 on: # run on every push and pull request
   push:
-    branches:[main, master] # when it is being directed to main or master
+    branches:
+        - main
+        - master # when it is being directed to main or master
   pull_requests:
-    branches:[main, master]
+        - main
+        - master
 
 jobs:
   run-checks:
@@ -37,4 +40,4 @@ jobs:
 
     # 6. Run our unit tests with coverage
     - name: Run Unit Tests
-      run: pytest --cov=. --cov-report=term-missing  
+      run: pytest --cov=. --cov-report=term-missing
