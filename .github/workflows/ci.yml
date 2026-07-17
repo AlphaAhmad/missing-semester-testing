@@ -6,6 +6,7 @@ on: # run on every push and pull request
         - main
         - master # when it is being directed to main or master
   pull_requests:
+    branches:
         - main
         - master
 
